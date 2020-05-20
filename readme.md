@@ -1,50 +1,17 @@
 Introduction:-
-Drupal is a content management system (CMS) written in PHP and distributed under the open-source GNU General Public License. People and organizations around the world use Drupal to power government sites, personal blogs, businesses, and more. What makes Drupal unique from other CMS frameworks is its growing community and a set of features that include secure processes, reliable performance, modularity, and flexibility to adapt.
-we will install Drupal using Docker Compose so that we can take advantage of containerization and deploy our Drupal website on servers. We will be running containers for a MySQL database, Nginx webserver, and Drupal. We will also secure our installation by obtaining TLS/SSL certificates with Let’s Encrypt for the domain we want to associate with our site. Finally, we will set up a cron job to renew our certificates so that our domain remains secure.
+WordPress is one of the most popular content management software (CMS) due to its multitude of features and ease of use. However, setting up a new web host environment can be time-consuming especially if you need to do it often. Simplifying the installation process to a few fast commands greatly reduce the time and effort required, this is where Docker comes in. Installing WordPress with Docker is a breeze, read ahead to find out more.
 
-=> Running Drupal in Docker for the first time:-
-Here is how I started mysql
-" docker run --name drupal-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=drupal -e MYSQL_USER=drupal -e MYSQL_PASSWORD=drupal -d mysql:5.5 "
+Download Images
+To get started, I’ll download the official WordPress and MYSQL Container Images using the lines below.
+docker pull wordpress
+docker pull mysql
+docker images
 
-Here is how I started drupal
-" docker run --name drupal-test -p 8080:80 --link drupal-mysql:mysql -d drupal "
+Create a MySQL Database Container
+docker run --name mysql01 -e MYSQL_ROOT_PASSWORD=Password1234 -d mysql
 
-=>Installation Drupal with Docker and connect mysql databaseL:-
-Step 1 — Defining the Web Server Configuration
-$mkdir drupal 
-$cd drupal
-$mkdir nginx-conf
-$nano nginx-conf/nginx.conf
+Create WordPress Container
+docker run --name wordpress01 --link mysql01 -p 8080:80 -e WORDPRESS_DB_HOST=mysql01:3306 -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=Password1234 -e WORDPRESS_DB_NAME=wordpress -e WORDPRESS_TABLE_PREFIX=wp_ -d wordpress
 
-Step 2 - Defining Environment Variables
-MYSQL_ROOT_PASSWORD=root_password
-MYSQL_DATABASE=drupal
-MYSQL_USER=drupal_database_user
-MYSQL_PASSWORD=drupal_database_password
-
-Step 3 Defining Services with Docker Compose
-Create a docker-compose.yml file:
-$nano docker-compose.yml
-Add Mysql database
-
-Step 4 — Obtaining SSL Certificates and Credentials
-$docker-compose up -d
-Check the status of the services using the " $docker-compose ps " command:
-
-Deploying MySQL with Docker:-
-
-" docker run --name MYSQL-NAME -e MYSQL_ROOT_PASSWORD=MYSQL-PASSWORD -d mysql:latest "
-
-Deploying and Configuring Drupal with Docker
-1. Run the following command. Replace "DRUPAL-NAME" with a name for your Drupal container. Replace "MYSQL-NAME" and "MYSQL-PASSWORD" with the values you used for your MySQL Docker container in the previous section.
-
-" docker run --name DRUPAL-NAME --link MYSQL-NAME:mysql -p 8080:80 -e MYSQL_USER=root -e MYSQL_PASSWORD=MYSQL-PASSWORD -d drupal "
-
-2. Go to http://YOUR.VPS.IP:8080/ in your web browser. Replace "YOUR.VPS.IP" with the IP address of your virtual server.
-
-3. When you reach Set up database, click ADVANCED OPTIONS.
-4. In the ADVANCED OPTIONS section, for Database name, enter "drupal ]
-5. For Database username, enter "root".
-6. For Database host, enter the value of MYSQL-NAME for your MySQL container.
-7. For Database password, enter the value of MYSQL-PASSWORD for your MySQL container.
-8. Continue with the Drupal setup.
+Start WordPress
+http://hostipaddrsss:8080
