@@ -1,6 +1,7 @@
 Introduction:-
 WordPress is one of the most popular content management software (CMS) due to its multitude of features and ease of use. However, setting up a new web host environment can be time-consuming especially if you need to do it often. Simplifying the installation process to a few fast commands greatly reduce the time and effort required, this is where Docker comes in. Installing WordPress with Docker is a breeze, read ahead to find out more.
 
+Running WordPress And MySQL On Docker Containers
 Download Images
 To get started, I’ll download the official WordPress and MYSQL Container Images using the lines below.
 docker pull wordpress
