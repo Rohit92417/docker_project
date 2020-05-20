@@ -7,7 +7,7 @@ services:
          - mysql_storage:/var/lib/mysql
      environment:
          MYSQL_ROOT_PASSWORD: rootpass
-         MYSQL_USER: priya
+         MYSQL_USER: Rohit
          MYSQL_PASSWORD: redhat
          MYSQL_DATABASE: mydb
    
@@ -20,7 +20,7 @@ services:
            - 8080:80
         environment:
             WORDPRESS_DB_HOST: dbos
-            WORDPRESS_DB_USER: priya
+            WORDPRESS_DB_USER: Rohit
             WORDPRESS_DB_PASSWORD: redhat
             WORDPRESS_DB_NAME: mydb
         volumes:
